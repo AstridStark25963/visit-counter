@@ -2,12 +2,17 @@
 export const config = { runtime: 'edge' };
 
 const svg = (count) => `
-<svg xmlns="http://www.w3.org/2000/svg" width="140" height="28">
-  <rect rx="4" width="140" height="28" fill="#555"/>
-  <rect rx="4" x="60" width="80" height="28" fill="#4c1"/>
-  <g fill="#fff" text-anchor="middle" font-family="Verdana" font-size="12">
-    <text x="30" y="18">visits</text>
-    <text x="100" y="18">${count}</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="28" role="img" aria-label="Visitor Count: ${count}">
+  <linearGradient id="smooth" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <rect rx="4" width="150" height="28" fill="#555"/>
+  <rect rx="4" x="70" width="80" height="28" fill="#4c1"/>
+  <rect rx="4" width="150" height="28" fill="url(#smooth)"/>
+  <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12">
+    <text x="35" y="18">Visitor</text>
+    <text x="110" y="18">${count}</text>
   </g>
 </svg>`;
 
@@ -33,3 +38,4 @@ export default async function handler() {
     },
   });
 }
+
