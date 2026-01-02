@@ -14,12 +14,22 @@ const svg = (count) => `
 export default async function handler() {
   const { UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN } = process.env;
   const key = 'visits:astridstark25963';
+
   const resp = await fetch(`${UPSTASH_REDIS_REST_URL}/incr/${key}`, {
     headers: { Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}` }
   });
-  const count = await resp.text();
+
+  // Upstash 返回 JSON: { "result": 1 }
+  const data = await resp.json();
+  const count = typeof data.result === 'number' ? data.result : data.result || data;
+
   return new Response(svg(count), {
     status: 200,
-    headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-cache' },
+    headers: {
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
   });
 }
