@@ -24,7 +24,6 @@ export default async function handler() {
     headers: { Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}` }
   });
 
-  // Upstash 返回 JSON: { "result": 1 }
   const data = await resp.json();
   const count = typeof data.result === 'number' ? data.result : data.result || data;
 
@@ -38,4 +37,5 @@ export default async function handler() {
     },
   });
 }
+
 
